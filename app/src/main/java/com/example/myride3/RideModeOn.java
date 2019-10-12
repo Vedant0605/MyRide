@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -92,8 +93,11 @@ public class RideModeOn extends AppCompatActivity implements LocationListener {
             nCurrentSpeed = location.getSpeed();
             fm.format(Locale.US,"%5.1f",nCurrentSpeed);
             String strCurrentSpeed = fm.toString();
-            strCurrentSpeed = strCurrentSpeed.replace(" ","0");
+            //strCurrentSpeed = strCurrentSpeed.replace(" ","0");
             tv_speed.setText(strCurrentSpeed +" KMPH");
+            if(nCurrentSpeed>80){
+                tv_speed.setTextColor(Color.parseColor("#ff0000"));
+            }
         }
     }
     @Override

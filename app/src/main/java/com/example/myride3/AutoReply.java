@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.example.myride3.ui.home.HomeFragment;
 
@@ -23,7 +24,7 @@ public class AutoReply extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auto_reply);
         final CallBroadcastReciever callBroadcastReciever = new CallBroadcastReciever();
-        Switch s = (Switch) findViewById(R.id.switch1);
+        ToggleButton s = (ToggleButton) findViewById(R.id.s);
         final Button check = (Button) findViewById(R.id.button);
         final TextView t = (TextView) findViewById(R.id.textView);
         final EditText e = (EditText) findViewById(R.id.textInputEditText);
@@ -44,10 +45,10 @@ public class AutoReply extends AppCompatActivity {
                 if(isChecked){
                     editor.putBoolean("Auto_reply",true);
                     editor.commit();
-                }else {
+                }/*else {
                     editor.putBoolean("Auto_reply",false);
                     editor.commit();
-                }
+                }*/
             }
         });
 

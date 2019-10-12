@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -41,7 +43,15 @@ import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.SEND_SMS;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
-
+//----------------------------------------------------------------------
+    /*Main
+        Ride
+        Settings
+        AddCont
+        autorrply
+        callbroadcast
+     */
+//----------------------------------------------------------------------
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
@@ -87,8 +97,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 requestPermissions(permissions,4);
             }
         }
-
-
+        //----------------------------------------------------------------------
+        LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+        if (locationManager != null) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
+        }
+        //----------------------------------------------------------------------
     }
 
     @Override
@@ -103,8 +117,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings :
-                Toast.makeText(this,"settings selected ", Toast.LENGTH_LONG);
+                Toast.makeText(this,"settings selected ", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(MainActivity.this, settings.class);
+                startActivity(intent);
                 return  true;
 
 
@@ -118,28 +133,34 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
+    //----------------------------------------------------------------------
     @Override
     public void onLocationChanged(Location location) {
         CLocation mylocation = new CLocation(location,true);
         autoStart(mylocation);
     }
     void autoStart(CLocation location){
+        Boolean flag = false;
+        SharedPreferences preferences = this.getSharedPreferences("MyPref", 0);
         Intent intent = new Intent(this,RideModeOn.class);
         float nCurrentSpeed = 0;
         if(location!=null){
             location.setbUseMetricUnits(true);
             nCurrentSpeed = location.getSpeed();
-            if(nCurrentSpeed > 20){
-                Toast.makeText(this,"dsadasfas",Toast.LENGTH_SHORT);
-                startActivity(intent);            }
-            else{
-                Toast.makeText(this,"dsa2423423532532dasfas",Toast.LENGTH_SHORT);
-                return;
+            if(preferences.getBoolean("Auto_Start",false)){
+                if(nCurrentSpeed > 40){
+                       flag = true;
+                }
+                else{
+                    return;
+                }
+            }
+            if(flag){
+                startActivity(intent);
             }
         }
     }
-
+    //----------------------------------------------------------------------
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
 
