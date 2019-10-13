@@ -1,6 +1,7 @@
 package com.example.myride3;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -53,7 +54,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
      */
 //----------------------------------------------------------------------
     private AppBarConfiguration mAppBarConfiguration;
-
+    protected MyRide3 myRide3;
+    private Activity myAct;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
         }
         //----------------------------------------------------------------------
+        myRide3 = (MyRide3)this.getApplicationContext();
     }
 
     @Override
@@ -112,7 +115,25 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+    protected void onResume() {
+        super.onResume();
+        myRide3.setCurrentActivity(this);
+        myAct = myRide3.getCurrentActivity();
+    }
+    protected void onPause() {
+        clearReferences();
+        super.onPause();
+    }
+    protected void onDestroy() {
+        clearReferences();
+        super.onDestroy();
+    }
 
+    private void clearReferences(){
+        Activity currActivity = myRide3.getCurrentActivity();
+        if (this.equals(currActivity))
+            myRide3.setCurrentActivity(null);
+    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -121,8 +142,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 Intent intent = new Intent(MainActivity.this, settings.class);
                 startActivity(intent);
                 return  true;
-
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -133,14 +152,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-    //----------------------------------------------------------------------
     @Override
     public void onLocationChanged(Location location) {
         CLocation mylocation = new CLocation(location,true);
         autoStart(mylocation);
     }
     void autoStart(CLocation location){
-        Boolean flag = false;
         SharedPreferences preferences = this.getSharedPreferences("MyPref", 0);
         Intent intent = new Intent(this,RideModeOn.class);
         float nCurrentSpeed = 0;
@@ -149,18 +166,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             nCurrentSpeed = location.getSpeed();
             if(preferences.getBoolean("Auto_Start",false)){
                 if(nCurrentSpeed > 40){
-                       flag = true;
+                    if(myRide3.getCurrentActivity()==myAct){
+                        startActivity(intent);
+                    }
                 }
                 else{
                     return;
                 }
             }
-            if(flag){
-                startActivity(intent);
-            }
         }
     }
-    //----------------------------------------------------------------------
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
 
