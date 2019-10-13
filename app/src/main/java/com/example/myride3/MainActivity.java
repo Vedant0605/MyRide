@@ -44,15 +44,6 @@ import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.SEND_SMS;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
-//----------------------------------------------------------------------
-    /*Main
-        Ride
-        Settings
-        AddCont
-        autorrply
-        callbroadcast
-     */
-//----------------------------------------------------------------------
     private AppBarConfiguration mAppBarConfiguration;
     protected MyRide3 myRide3;
     private Activity myAct;
@@ -89,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(READ_PHONE_STATE) == PackageManager.PERMISSION_DENIED || checkSelfPermission(Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_DENIED) {
                 String[] permissions = {READ_PHONE_STATE,READ_CALL_LOG,SEND_SMS,ACCESS_NOTIFICATION_POLICY,ACCESS_FINE_LOCATION};
@@ -99,12 +91,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 requestPermissions(permissions,4);
             }
         }
-        //----------------------------------------------------------------------
+
         LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
         if (locationManager != null) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
         }
-        //----------------------------------------------------------------------
+
         myRide3 = (MyRide3)this.getApplicationContext();
     }
 

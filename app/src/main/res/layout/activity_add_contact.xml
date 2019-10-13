@@ -27,13 +27,14 @@
         android:id="@+id/entername"
         android:layout_width="350dp"
         android:layout_height="50dp"
+        android:layout_marginStart="24dp"
         android:hint="enter name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.162"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.317" />
+        app:layout_constraintVertical_bias="0.314" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/enternumber"
@@ -51,49 +52,61 @@
 
     <Button
         android:id="@+id/okcontact"
-        android:layout_width="108dp"
-        android:layout_height="55dp"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="Add Contact"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.52" />
+        app:layout_constraintVertical_bias="0.475" />
 
-    <ScrollView
-        android:layout_width="414dp"
-        android:layout_height="304dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
-
-        <TextView
-            android:id="@+id/showcontacts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="insertValues" />
-    </ScrollView>
 
     <Button
         android:id="@+id/showval"
-        android:layout_width="100dp"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="56dp"
-        android:background="@color/colorPrimary"
-        android:onClick="ShowValues"
-        android:text="View Contacts"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Show Contacts in Database"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.798"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.473" />
+        app:layout_constraintVertical_bias="0.549" />
+
+    <Button
+        android:id="@+id/clearall"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Clear Database"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.622" />
+
+    <TextView
+        android:id="@+id/showcontacts"
+        android:layout_width="383dp"
+        android:layout_height="75dp"
+        android:onClick="insertValues"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showval"
+        app:layout_constraintVertical_bias="0.284" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

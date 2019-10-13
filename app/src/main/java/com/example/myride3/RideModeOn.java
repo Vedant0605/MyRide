@@ -131,17 +131,19 @@ public class RideModeOn extends AppCompatActivity implements LocationListener {
             String strCurrentSpeed = fm.toString();
             //strCurrentSpeed = strCurrentSpeed.replace(" ","0");
             tv_speed.setText(strCurrentSpeed +" KMPH");
-            if(nCurrentSpeed>80){
-                tv_speed.setTextColor(Color.parseColor("#ff0000"));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    v.vibrate(VibrationEffect.createOneShot(10500, VibrationEffect.DEFAULT_AMPLITUDE));
-                } else {
-                    //deprecated in API 26
-                    v.vibrate(10500);
+            if(preferences.getBoolean("Auto_Speed",true)){
+                if(nCurrentSpeed>80){
+                    tv_speed.setTextColor(Color.parseColor("#ff0000"));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        v.vibrate(VibrationEffect.createOneShot(10500, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        //deprecated in API 26
+                        v.vibrate(10500);
+                    }
                 }
-            }
-            else {
-                tv_speed.setTextColor(Color.parseColor("#CFFDFF"));
+                else {
+                    tv_speed.setTextColor(Color.parseColor("#CFFDFF"));
+                }
             }
             /*if(preferences.getBoolean("Auto_Start",false)){
                 if(nCurrentSpeed < 10){

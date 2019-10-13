@@ -64,9 +64,9 @@ public class AddContact extends AppCompatActivity {
                     Toast.makeText(AddContact.this, "No Data is returned", Toast.LENGTH_SHORT).show();
                 } else {
                     while (objCursor.moveToNext()) {
-                        objStringBuffer.append("ID:" + objCursor.getInt(0));
-                        objStringBuffer.append("Name:" + objCursor.getString(1));
-                        objStringBuffer.append("Number:" + objCursor.getInt(2));
+                        objStringBuffer.append(" Name: " + objCursor.getString(1)+" ");
+                        objStringBuffer.append(" Number: " + objCursor.getString(2));
+                        objStringBuffer.append("\n");
                     }
                     retrieveVal.setText(objStringBuffer);
                 }
