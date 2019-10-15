@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@color/background"
     tools:context=".AutoReply">
 
     <com.google.android.material.textfield.TextInputEditText
@@ -69,17 +69,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.208" />
 
-    <ToggleButton
+    <Switch
         android:id="@+id/s"
-        android:layout_width="74dp"
-        android:layout_height="36dp"
-        android:checked="true"
-        android:text="ToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.854"
+        app:layout_constraintHorizontal_bias="0.796"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.214" />
+        app:layout_constraintVertical_bias="0.204" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

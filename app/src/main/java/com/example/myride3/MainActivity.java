@@ -45,8 +45,7 @@ import static android.Manifest.permission.SEND_SMS;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
     private AppBarConfiguration mAppBarConfiguration;
-    protected MyRide3 myRide3;
-    private Activity myAct;
+    static int counter = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,8 +95,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if (locationManager != null) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
         }
-
-        myRide3 = (MyRide3)this.getApplicationContext();
     }
 
     @Override
@@ -109,22 +106,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
     protected void onResume() {
         super.onResume();
-        myRide3.setCurrentActivity(this);
-        myAct = myRide3.getCurrentActivity();
+        counter++;
     }
     protected void onPause() {
-        clearReferences();
         super.onPause();
     }
     protected void onDestroy() {
-        clearReferences();
         super.onDestroy();
-    }
-
-    private void clearReferences(){
-        Activity currActivity = myRide3.getCurrentActivity();
-        if (this.equals(currActivity))
-            myRide3.setCurrentActivity(null);
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -147,7 +135,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onLocationChanged(Location location) {
         CLocation mylocation = new CLocation(location,true);
-        autoStart(mylocation);
+        if(counter % 2 == 0 || counter == 1){
+            autoStart(mylocation);
+        }
     }
     void autoStart(CLocation location){
         SharedPreferences preferences = this.getSharedPreferences("MyPref", 0);
@@ -158,9 +148,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             nCurrentSpeed = location.getSpeed();
             if(preferences.getBoolean("Auto_Start",false)){
                 if(nCurrentSpeed > 40){
-                    if(myRide3.getCurrentActivity()==myAct){
-                        startActivity(intent);
-                    }
+                    startActivity(intent);
+                    counter++;
                 }
                 else{
                     return;
@@ -182,4 +171,5 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public void onProviderDisabled(String provider) {
 
     }
+
 }

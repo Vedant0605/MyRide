@@ -13,6 +13,7 @@ public class ContactDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME="ContactsInfo.db";
     private static final int DATABASE_VERSION = 1;
     private String createDatabase = "create TABLE contacts ( id integer primary key autoincrement, name varchar (100),number integer)";
+    private String createSpeedTable = "create TABLE speed ( id integer primary key autoincrement, avgspeed float, dateofride date)";
     Context context;
 
 
@@ -26,6 +27,7 @@ public class ContactDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         try{
             sqLiteDatabase.execSQL(createDatabase);
+            sqLiteDatabase.execSQL(createSpeedTable);
             Toast.makeText(context,"Table Created succesfully ",Toast.LENGTH_SHORT).show();
         }
         catch (Exception e)

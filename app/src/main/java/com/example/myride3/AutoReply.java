@@ -24,21 +24,26 @@ public class AutoReply extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auto_reply);
         final CallBroadcastReciever callBroadcastReciever = new CallBroadcastReciever();
-        ToggleButton s = (ToggleButton) findViewById(R.id.s);
+        final Switch s = (Switch) findViewById(R.id.s);
         final Button check = (Button) findViewById(R.id.button);
         final TextView t = (TextView) findViewById(R.id.textView);
         final EditText e = (EditText) findViewById(R.id.textInputEditText);
         final String[] msg = new String[1];
         final Context context = getApplicationContext();
 
-        SharedPreferences pref = context.getSharedPreferences("MyPref", 0); // 0 - for private mode
+        final SharedPreferences pref = context.getSharedPreferences("MyPref", 0); // 0 - for private mode
         final SharedPreferences.Editor editor = pref.edit();
 
         check.setVisibility(View.VISIBLE);
         t.setVisibility(View.VISIBLE);
         e.setVisibility(View.VISIBLE);
         e.setText(pref.getString("Message",""));
-        s.setChecked(pref.getBoolean("MyPref",false));
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                s.setChecked(pref.getBoolean("MyPref",true));
+            }
+        });
         s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {

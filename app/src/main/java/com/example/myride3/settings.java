@@ -13,11 +13,18 @@ public class settings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        Switch sw1 = (Switch)findViewById(R.id.switch3);
-        Switch sw2 = (Switch)findViewById(R.id.switch4);
-        SharedPreferences pref = this.getSharedPreferences("MyPref", 0); // 0 - for private mode
+        final Switch sw1 = (Switch)findViewById(R.id.switch3);
+        final Switch sw2 = (Switch)findViewById(R.id.switch4);
+        final SharedPreferences pref = this.getSharedPreferences("MyPref", 0); // 0 - for private mode
         final SharedPreferences.Editor editor = pref.edit();
-        sw1.setChecked(pref.getBoolean("MyPref",false));
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                sw1.setChecked(pref.getBoolean("MyPref",true));
+                sw2.setChecked(pref.getBoolean("MyPref",true));
+            }
+        });
+
         sw1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -30,7 +37,6 @@ public class settings extends AppCompatActivity {
                 }
             }
         });
-        sw2.setChecked(pref.getBoolean("MyPref",false));
         sw2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {

@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
+import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
@@ -37,10 +38,7 @@ public class RideModeOn extends AppCompatActivity implements LocationListener {
     private static final int REQUEST_CALL = 1;
     CallBroadcastReciever callBroadcastReciever = new CallBroadcastReciever();
     TextView tv_speed;
-    protected MyRide3 myRide3;
-    private Activity myAct;
-    private Activity prevAct;
-
+    static int counter = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -60,38 +58,28 @@ public class RideModeOn extends AppCompatActivity implements LocationListener {
         EndRideMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent goBack = new Intent(RideModeOn.this,MainActivity.class);
+                Intent goBack = new Intent(RideModeOn.this, MainActivity.class);
                 startActivity(goBack);
             }
         });
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1000);
-        }else{
+        } else {
             doStuff();
         }
-
-        myRide3 = (MyRide3)this.getApplicationContext();
-
     }
+
     protected void onResume() {
         super.onResume();
-        myRide3.setCurrentActivity(this);
-        myAct = myRide3.getCurrentActivity();
-    }
-    protected void onPause() {
-        clearReferences();
-        super.onPause();
-    }
-    protected void onDestroy() {
-        clearReferences();
-        super.onDestroy();
     }
 
-    private void clearReferences(){
-        Activity currActivity = myRide3.getCurrentActivity();
-        if (this.equals(currActivity))
-            myRide3.setCurrentActivity(null);
+    protected void onPause() {
+        super.onPause();
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     private void makePhoneCall() {
@@ -105,59 +93,79 @@ public class RideModeOn extends AppCompatActivity implements LocationListener {
             startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
         }
     }
-    void hideNavigationBar()
-    {
+
+    void hideNavigationBar() {
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
-                |View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                 |View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                |View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                |View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
         decorView.setSystemUiVisibility(uiOptions);
     }
 
-    void updateSpeed(CLocation location){
+    void updateSpeed(CLocation location) {
+
         float nCurrentSpeed = 0;
-        tv_speed = (TextView)findViewById(R.id.tv_speed);
-        Formatter fm  = new Formatter(new StringBuilder());
+        float prevSpeed = nCurrentSpeed;
+        tv_speed = (TextView) findViewById(R.id.tv_speed);
+        Formatter fm = new Formatter(new StringBuilder());
         SharedPreferences preferences = this.getSharedPreferences("MyPref", 0);
-        Intent intent = new Intent(this,MainActivity.class);
         Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        if(location!=null){
+
+        if (location != null) {
             location.setbUseMetricUnits(true);
             nCurrentSpeed = location.getSpeed();
-            fm.format(Locale.US,"%5.1f",nCurrentSpeed);
+            fm.format(Locale.US, "%5.1f", nCurrentSpeed);
             String strCurrentSpeed = fm.toString();
             //strCurrentSpeed = strCurrentSpeed.replace(" ","0");
-            tv_speed.setText(strCurrentSpeed +" KMPH");
-            if(preferences.getBoolean("Auto_Speed",true)){
-                if(nCurrentSpeed>80){
+            tv_speed.setText(strCurrentSpeed + " KMPH");
+            if (preferences.getBoolean("Auto_Speed", true)) {
+                if (nCurrentSpeed > 80) {
                     tv_speed.setTextColor(Color.parseColor("#ff0000"));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         v.vibrate(VibrationEffect.createOneShot(10500, VibrationEffect.DEFAULT_AMPLITUDE));
                     } else {
-                        //deprecated in API 26
                         v.vibrate(10500);
                     }
-                }
-                else {
+                } else {
                     tv_speed.setTextColor(Color.parseColor("#CFFDFF"));
                 }
             }
-            /*if(preferences.getBoolean("Auto_Start",false)){
-                if(nCurrentSpeed < 10){
-                    if(myRide3.getCurrentActivity()==myAct){
-                       startActivity(intent);
-                       prevAct = myRide3.getCurrentActivity();
-                    }
-                }
-                else{
+           /* if(counter < 2){
+                autoStop(nCurrentSpeed);
+            }
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:" + 911));
+            if ((nCurrentSpeed != prevSpeed && prevSpeed > 60) && nCurrentSpeed == 0) {
+                if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    Activity#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for Activity#requestPermissions for more details.
                     return;
                 }
+                startActivity(callIntent);
             }*/
         }
     }
+   /* void autoStop(float currentSpeed){
+        SharedPreferences preferences = this.getSharedPreferences("MyPref", 0);
+        Intent intent = new Intent(this, MainActivity.class);
+        if(preferences.getBoolean("Auto_Start",false)){
+            if(currentSpeed < 10 && currentSpeed > 5){
+                startActivity(intent);
+                counter++;
+            }
+            else{
+                return;
+            }
+        }
+    }*/
     @Override
     protected void onStart() {
         super.onStart();
@@ -177,7 +185,6 @@ public class RideModeOn extends AppCompatActivity implements LocationListener {
                 }
             }
         }
-
     }
     @Override
     protected void onStop() {

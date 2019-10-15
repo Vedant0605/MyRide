@@ -64,7 +64,7 @@ public class AddContact extends AppCompatActivity {
                     Toast.makeText(AddContact.this, "No Data is returned", Toast.LENGTH_SHORT).show();
                 } else {
                     while (objCursor.moveToNext()) {
-                        objStringBuffer.append(" Name: " + objCursor.getString(1)+" ");
+                        objStringBuffer.append("| Name: " + objCursor.getString(1)+" | ");
                         objStringBuffer.append(" Number: " + objCursor.getString(2));
                         objStringBuffer.append("\n");
                     }
@@ -82,9 +82,7 @@ public class AddContact extends AppCompatActivity {
                 if (!nameEt.getText().toString().isEmpty() && !numberEt.getText().toString().isEmpty()) {
                     ContentValues contentValues = new ContentValues();
                     contentValues.put("Name", nameEt.getText().toString());
-                    //----------------------------------------------------------------------
                     contentValues.put("Number", String.valueOf(numberEt.getText()));
-                    //----------------------------------------------------------------------
                     long check = objSqLiteDatabase.insert("contacts", null, contentValues);
                     if (check != -1) {
                         Toast.makeText(AddContact.this, "Values inserted in table !", Toast.LENGTH_SHORT).show();
