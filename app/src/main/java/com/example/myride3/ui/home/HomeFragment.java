@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
         });
         Button Emergency = (Button) root.findViewById(R.id.eMergency);
         Button addContact = (Button) root.findViewById(R.id.contact);
-        Button autoReply = (Button) root.findViewById(R.id.reply);
+        Button autoReply = (Button) root.findViewById(R.id.setting);
         final Button Exit = (Button) root.findViewById(R.id.EnD);
         final Button startRide = (Button) root.findViewById(R.id.startRide);
         final Intent intent = new Intent(getActivity(), RideModeOn.class);

@@ -1,5 +1,6 @@
 package com.example.myride3;
 
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.NotificationManager;
@@ -7,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -37,6 +39,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.widget.Toast;
 
+import java.sql.SQLInput;
+
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.ACCESS_NOTIFICATION_POLICY;
 import static android.Manifest.permission.READ_CALL_LOG;
@@ -59,14 +63,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -95,6 +92,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if (locationManager != null) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
         }
+
+        ContactDatabase contactDatabase = new ContactDatabase(this);
+        SQLiteDatabase sqLiteDatabase = contactDatabase.getWritableDatabase();
     }
 
     @Override
@@ -104,10 +104,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
     protected void onResume() {
         super.onResume();
         counter++;
     }
+
     protected void onPause() {
         super.onPause();
     }
@@ -124,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 return  true;
         }
         return super.onOptionsItemSelected(item);
+
     }
 
     @Override
@@ -146,8 +149,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if(location!=null){
             location.setbUseMetricUnits(true);
             nCurrentSpeed = location.getSpeed();
-            if(preferences.getBoolean("Auto_Start",false)){
-                if(nCurrentSpeed > 40){
+            if(preferences.getBoolean("Auto_Start",true)){
+                if(nCurrentSpeed > 20){
                     startActivity(intent);
                     counter++;
                 }

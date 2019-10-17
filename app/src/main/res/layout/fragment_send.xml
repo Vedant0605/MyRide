@@ -23,7 +23,7 @@
         android:id="@+id/textView8"
         android:layout_width="304dp"
         android:layout_height="155dp"
-        android:fontFamily="casual"
+        android:fontFamily="serif"
         android:gravity="center"
         android:text="Thank You For Using Our App !\nPlease Take a Moment to review Us !"
         android:textColor="@android:color/black"

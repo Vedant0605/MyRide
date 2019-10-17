@@ -7,7 +7,6 @@
  •	The Application will automatically start after speed is greater than 20kmph.
  •	When Ride Mode is ON all Calls will be Rejected* and automatically text will be sent to call as per user’s instructions.
  •	User will able to add list of contacts of whom call will not be rejected.
- • User will be able to dial emergency number while ride mode is ON
  •	If speed is greater than speed limit then user will be notified using vibrations and visual notification.
  •	User will be able to keep track of his previous ride information.
  •	User will be able decide his own preferences.

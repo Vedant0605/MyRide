@@ -23,6 +23,9 @@ public class AutoReply extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auto_reply);
+
+        final SharedPreferences pref = this.getSharedPreferences("MyPref", 0); // 0 - for private mode
+        final SharedPreferences.Editor editor = pref.edit();
         final CallBroadcastReciever callBroadcastReciever = new CallBroadcastReciever();
         final Switch s = (Switch) findViewById(R.id.s);
         final Button check = (Button) findViewById(R.id.button);
@@ -30,30 +33,53 @@ public class AutoReply extends AppCompatActivity {
         final EditText e = (EditText) findViewById(R.id.textInputEditText);
         final String[] msg = new String[1];
         final Context context = getApplicationContext();
+        final Switch sw1 = (Switch)findViewById(R.id.switch3);
+        final Switch sw2 = (Switch)findViewById(R.id.switch4);
 
-        final SharedPreferences pref = context.getSharedPreferences("MyPref", 0); // 0 - for private mode
-        final SharedPreferences.Editor editor = pref.edit();
-
-        check.setVisibility(View.VISIBLE);
-        t.setVisibility(View.VISIBLE);
-        e.setVisibility(View.VISIBLE);
-        e.setText(pref.getString("Message",""));
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                sw1.setChecked(pref.getBoolean("MyPref",true));
+                sw2.setChecked(pref.getBoolean("MyPref",true));
                 s.setChecked(pref.getBoolean("MyPref",true));
             }
         });
+
+        sw1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked){
+                    editor.putBoolean("Auto_Speed",true);
+                    editor.commit();
+                }else {
+                    editor.putBoolean("Auto_Speed",false);
+                    editor.commit();
+                }
+            }
+        });
+        sw2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked){
+                    editor.putBoolean("Auto_Start",true);
+                    editor.commit();
+                }else {
+                    editor.putBoolean("Auto_Start",false);
+                    editor.commit();
+                }
+            }
+        });
+
         s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if(isChecked){
                     editor.putBoolean("Auto_reply",true);
                     editor.commit();
-                }/*else {
+                }else {
                     editor.putBoolean("Auto_reply",false);
                     editor.commit();
-                }*/
+                }
             }
         });
 

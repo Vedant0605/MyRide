@@ -1,120 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent">
 
     <Button
         android:id="@+id/eMergency"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="91dp"
         android:background="@drawable/emergency"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.236"
+        app:layout_constraintHorizontal_bias="0.266"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.63" />
+        app:layout_constraintTop_toBottomOf="@+id/startRide"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/reply"
+        android:id="@+id/setting"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginStart="8dp"
-        android:background="@drawable/replyall"
+        android:background="@drawable/setting"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.235"
+        app:layout_constraintHorizontal_bias="0.252"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.896" />
+        app:layout_constraintTop_toBottomOf="@+id/eMergency"
+        app:layout_constraintVertical_bias="0.292" />
+
 
     <Button
         android:id="@+id/contact"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:background="@drawable/addcontact"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toEndOf="@+id/eMergency"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.642" />
+        app:layout_constraintTop_toBottomOf="@+id/startRide"
+        app:layout_constraintVertical_bias="0.23" />
 
     <Button
         android:id="@+id/EnD"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:background="@drawable/exit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.726"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.868" />
+        app:layout_constraintHorizontal_bias="0.547"
+        app:layout_constraintStart_toEndOf="@+id/setting"
+        app:layout_constraintTop_toBottomOf="@+id/contact"
+        app:layout_constraintVertical_bias="0.291" />
 
     <TextView
         android:id="@+id/emergencytext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="Emergency"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.267"
+        app:layout_constraintHorizontal_bias="0.27"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.709" />
+        app:layout_constraintTop_toBottomOf="@+id/eMergency"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/contacttext"
-        android:layout_width="119dp"
-        android:layout_height="34dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="Add Contacts"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.773"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.724" />
+        app:layout_constraintTop_toBottomOf="@+id/contact"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/replytext"
-        android:layout_width="79dp"
-        android:layout_height="38dp"
-        android:text="Auto-Reply Message"
+        android:id="@+id/settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Settings"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.278"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.946" />
+        app:layout_constraintTop_toBottomOf="@+id/setting"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/exittext"
-        android:layout_width="108dp"
-        android:layout_height="21dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:text="Exit MyRide"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.745"
+        app:layout_constraintHorizontal_bias="0.771"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.923" />
-
+        app:layout_constraintTop_toBottomOf="@+id/EnD"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/startRide"
         style="@style/Widget.AppCompat.Button"
-        android:layout_width="208dp"
-        android:layout_height="209dp"
+        android:layout_width="176dp"
+        android:layout_height="173dp"
         android:background="@drawable/helmet"
         android:ellipsize="marquee"
         android:soundEffectsEnabled="true"
@@ -122,20 +129,23 @@
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.561"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.247" />
+        app:layout_constraintVertical_bias="0.168" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
         android:text="Start your ride"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/startRide"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
         android:id="@+id/text_home"
         android:layout_width="match_parent"
