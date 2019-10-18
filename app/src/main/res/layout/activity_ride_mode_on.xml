@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/digital_7"
         android:text="0.00 KMPH"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimary"
         android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/carEmergency"
         app:layout_constraintEnd_toEndOf="parent"

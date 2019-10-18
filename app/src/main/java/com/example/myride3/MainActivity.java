@@ -100,8 +100,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        MenuInflater inflater = getMenuInflater();
-        getMenuInflater().inflate(R.menu.main, menu);
+
         return true;
     }
 
@@ -118,13 +117,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings :
-                Toast.makeText(this,"settings selected ", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(MainActivity.this, settings.class);
-                startActivity(intent);
-                return  true;
-        }
+
         return super.onOptionsItemSelected(item);
 
     }

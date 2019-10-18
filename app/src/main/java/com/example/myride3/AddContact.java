@@ -43,7 +43,7 @@ public class AddContact extends AppCompatActivity {
                     contactDatabase.getReadableDatabase();
                     insertValues(view);
                 } catch (Exception e) {
-                    Toast.makeText(AddContact.this, "Exception in creating database ", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(AddContact.this, "Exception in creating database ", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -79,7 +79,7 @@ public class AddContact extends AppCompatActivity {
                 objSqLiteDatabase.endTransaction();
             }
         } catch (Exception e) {
-            Toast.makeText(AddContact.this, "Exception in acquiring values", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(AddContact.this, "Exception in acquiring values", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -88,13 +88,10 @@ public class AddContact extends AppCompatActivity {
         try {
             SQLiteDatabase objSqLiteDatabase  = contactDatabase.getWritableDatabase();
             Cursor cursor = objSqLiteDatabase.rawQuery("delete from contacts",null);
-            Cursor cursor1 = objSqLiteDatabase.rawQuery("delete from avgspeed",null);
-            Cursor cursor2 = objSqLiteDatabase.rawQuery("delete from speed",null);
+
             Toast.makeText(this, "Data Cleared Succesfully", Toast.LENGTH_SHORT).show();
             retrieveVal.setText(null);
             cursor.moveToFirst();
-            cursor1.moveToFirst();
-            cursor2.moveToFirst();
             objSqLiteDatabase.endTransaction();
         }
         catch (Exception e)

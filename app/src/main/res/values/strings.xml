@@ -10,7 +10,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Car Mode</string>
     <string name="menu_slideshow">Previous Rides</string>
-    <string name="menu_tools">Tutorial</string>
+    <string name="menu_tools">About</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Rate Us</string>
 </resources>

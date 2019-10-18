@@ -115,13 +115,13 @@ public class RideModeOn extends AppCompatActivity implements LocationListener {
     }
 
     void updateSpeed(CLocation location) {
+        TextView textView = findViewById(R.id.textView2);
         counter++;
         float nCurrentSpeed = 0;
         tv_speed = (TextView) findViewById(R.id.tv_speed);
         Formatter fm = new Formatter(new StringBuilder());
         SharedPreferences preferences = this.getSharedPreferences("MyPref", 0);
         Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        Timer timer = new Timer ();
         ContactDatabase contactDatabase = new ContactDatabase(this);
         SQLiteDatabase objSqLiteDatabase = contactDatabase.getWritableDatabase();
         if (location != null) {
@@ -142,6 +142,7 @@ public class RideModeOn extends AppCompatActivity implements LocationListener {
             if (preferences.getBoolean("Auto_Speed", true)) {
                 if (nCurrentSpeed > 80) {
                     tv_speed.setTextColor(Color.parseColor("#ff0000"));
+                    textView.setText("Please Slow Down !!");
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         v.vibrate(VibrationEffect.createOneShot(10500, VibrationEffect.DEFAULT_AMPLITUDE));
                     } else {
@@ -149,6 +150,7 @@ public class RideModeOn extends AppCompatActivity implements LocationListener {
                     }
                 } else {
                     tv_speed.setTextColor(Color.parseColor("#CFFDFF"));
+                    textView.setText("Enjoy your Ride!");
                 }
             }
         }
@@ -202,9 +204,15 @@ public class RideModeOn extends AppCompatActivity implements LocationListener {
             ContentValues contentValues = new ContentValues();
             contentValues.put("avgspeed",average);
             contentValues.put("dateofride",strDate);
-            long check = objSqLiteDatabase.insert("avgspeed",null,contentValues);
+            if(average != 0){
+                long check = objSqLiteDatabase.insert("avgspeed",null,contentValues);
+            }
         }
+        Cursor cursor2 = objSqLiteDatabase.rawQuery("delete from speed",null);
+        cursor2.moveToFirst();
         objSqLiteDatabase.close();
+
+
     }
     void doStuff() {
         LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);

@@ -26,12 +26,5 @@ public class NavigationHeader extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        TextView about = (TextView) findViewById(R.id.about);
-        about.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //go to about activity / who built this app
-            }
-        });
     }
 }

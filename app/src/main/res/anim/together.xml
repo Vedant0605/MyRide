@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <scale
-        android:duration="4000"
+        android:duration="2500"
         android:fromXScale="0.125"
         android:fromYScale="0.125"
         android:pivotX="50%"
@@ -14,7 +14,7 @@
     </scale>
 
     <rotate
-        android:duration="4000"
+        android:duration="2500"
         android:fromDegrees="0"
         android:pivotX="50%"
         android:pivotY="50%"

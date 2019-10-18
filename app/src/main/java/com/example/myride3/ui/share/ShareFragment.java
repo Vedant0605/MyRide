@@ -31,7 +31,8 @@ public class ShareFragment extends Fragment {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_SUBJECT, "Share MyRide app");
-        intent.putExtra(Intent.EXTRA_TEXT, "Hey ! Check Out this cool app ! It helps you while your are busy riding a bike !");
+        intent.putExtra(Intent.EXTRA_TEXT, "Hey ! Check Out this cool app ! It helps you while your are busy riding a bike ! ");
+        intent.putExtra(Intent.EXTRA_TEXT, "Hey ! Check Out this cool app ! It helps you while your are busy riding a bike ! Download Now ! https://drive.google.com/open?id=1kToM-jTaJxs15cWOMf_5dfN3WMkamZ-F");
         startActivity(Intent.createChooser(intent, "Choose a method"));
         shareViewModel.getText().observe(this, new Observer<String>() {
             @Override

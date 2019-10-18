@@ -30,8 +30,8 @@ public class CallBroadcastReciever extends BroadcastReceiver {
             SharedPreferences preferences = context.getSharedPreferences("MyPref",0);
             String state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
             String number = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-            String message = preferences.getString("Message","");
-            Boolean isOn = preferences.getBoolean("Auto_reply",false);
+            String message = preferences.getString("Message","User is currently Driving.");
+            Boolean isOn = preferences.getBoolean("Auto_reply",true);
 
             if(state.equalsIgnoreCase(TelephonyManager.EXTRA_STATE_RINGING)){
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,17 @@ public class SlideshowFragment extends Fragment {
         setAverage(root);
         //showYesterday(root);
         //showPrevious();
+        final SQLiteDatabase objSqLiteDatabase = contactDatabase.getWritableDatabase();
+        final Cursor cursor1 = objSqLiteDatabase.rawQuery("delete from avgspeed",null);
+        Button button = (Button)root.findViewById(R.id.button3);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cursor1.moveToFirst();
+                putAvg.setText(null);
+                Toast.makeText(getActivity(), "Data Cleared Succesfully!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 

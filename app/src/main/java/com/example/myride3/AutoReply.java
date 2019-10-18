@@ -35,7 +35,7 @@ public class AutoReply extends AppCompatActivity {
         final Context context = getApplicationContext();
         final Switch sw1 = (Switch)findViewById(R.id.switch3);
         final Switch sw2 = (Switch)findViewById(R.id.switch4);
-
+        e.setText(pref.getString("Auto_Reply",""));
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
