@@ -1,10 +1,6 @@
 package com.example.myride3;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -14,11 +10,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myride3.ui.home.HomeFragment;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AddContact extends AppCompatActivity {
-    Button ok,showVal,clear;
-    EditText nameEt,numberEt;
+    Button ok, showVal, clear;
+    EditText nameEt, numberEt;
     ContactDatabase contactDatabase;
     TextView retrieveVal;
 
@@ -43,7 +39,7 @@ public class AddContact extends AppCompatActivity {
                     contactDatabase.getReadableDatabase();
                     insertValues(view);
                 } catch (Exception e) {
-                   // Toast.makeText(AddContact.this, "Exception in creating database ", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(AddContact.this, "Exception in creating database ", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -61,8 +57,7 @@ public class AddContact extends AppCompatActivity {
         });
     }
 
-    public void ShowValues (View view)
-    {
+    public void ShowValues(View view) {
         try {
             SQLiteDatabase objSqLiteDatabase = contactDatabase.getReadableDatabase();
             Cursor objCursor = objSqLiteDatabase.rawQuery("select * from  contacts", null);
@@ -71,7 +66,7 @@ public class AddContact extends AppCompatActivity {
                 Toast.makeText(AddContact.this, "No Data is returned", Toast.LENGTH_SHORT).show();
             } else {
                 while (objCursor.moveToNext()) {
-                    objStringBuffer.append("| Name: " + objCursor.getString(1)+" | ");
+                    objStringBuffer.append("| Name: " + objCursor.getString(1) + " | ");
                     objStringBuffer.append(" Number: " + objCursor.getString(2));
                     objStringBuffer.append("\n");
                 }
@@ -83,24 +78,22 @@ public class AddContact extends AppCompatActivity {
         }
 
     }
-    public void ClearDatabase(View view)
-    {
+
+    public void ClearDatabase(View view) {
         try {
-            SQLiteDatabase objSqLiteDatabase  = contactDatabase.getWritableDatabase();
-            Cursor cursor = objSqLiteDatabase.rawQuery("delete from contacts",null);
+            SQLiteDatabase objSqLiteDatabase = contactDatabase.getWritableDatabase();
+            Cursor cursor = objSqLiteDatabase.rawQuery("delete from contacts", null);
 
             Toast.makeText(this, "Data Cleared Succesfully", Toast.LENGTH_SHORT).show();
             retrieveVal.setText(null);
             cursor.moveToFirst();
             objSqLiteDatabase.endTransaction();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Toast.makeText(this, "Error Clearing Database", Toast.LENGTH_SHORT).show();
         }
     }
-    public void insertValues (View view)
-    {
+
+    public void insertValues(View view) {
         SQLiteDatabase objSqLiteDatabase = contactDatabase.getWritableDatabase();
         if (objSqLiteDatabase != null) {
             if (!nameEt.getText().toString().isEmpty() && !numberEt.getText().toString().isEmpty()) {
@@ -122,6 +115,7 @@ public class AddContact extends AppCompatActivity {
         }
         objSqLiteDatabase.endTransaction();
     }
+
     protected void onStop() {
         super.onStop();
 

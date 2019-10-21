@@ -1,7 +1,6 @@
 package com.example.myride3;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Context;
@@ -24,7 +23,6 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
-import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
@@ -35,18 +33,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class RideModeOn extends AppCompatActivity implements LocationListener {
 
     private static final int REQUEST_CALL = 1;
+    static int counter = 0;
     CallBroadcastReciever callBroadcastReciever = new CallBroadcastReciever();
     TextView tv_speed;
-    static int counter = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -128,16 +124,16 @@ public class RideModeOn extends AppCompatActivity implements LocationListener {
             location.setbUseMetricUnits(true);
             nCurrentSpeed = location.getSpeed();
             final float finalNCurrentSpeed = nCurrentSpeed;
-            if(objSqLiteDatabase != null){
+            if (objSqLiteDatabase != null) {
                 ContentValues contentValues = new ContentValues();
-                contentValues.put("ridespeed",finalNCurrentSpeed);
-                if(finalNCurrentSpeed != 0){
-                    long check = objSqLiteDatabase.insert("speed",null,contentValues);
+                contentValues.put("ridespeed", finalNCurrentSpeed);
+                if (finalNCurrentSpeed != 0) {
+                    long check = objSqLiteDatabase.insert("speed", null, contentValues);
                 }
             }
             fm.format(Locale.US, "%5.1f", nCurrentSpeed);
             String strCurrentSpeed = fm.toString();
-            strCurrentSpeed = strCurrentSpeed.replace(" ","0");
+            strCurrentSpeed = strCurrentSpeed.replace(" ", "0");
             tv_speed.setText(strCurrentSpeed + " KMPH");
             if (preferences.getBoolean("Auto_Speed", true)) {
                 if (nCurrentSpeed > 80) {
@@ -162,12 +158,12 @@ public class RideModeOn extends AppCompatActivity implements LocationListener {
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         IntentFilter filter = new IntentFilter();
         filter.addAction(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
-        registerReceiver(callBroadcastReciever,filter);
+        registerReceiver(callBroadcastReciever, filter);
         try {
             audioManager.setRingerMode(0);
         } catch (Exception e) {
-            Toast.makeText(this,"Enable Do Not Disturb access.",Toast.LENGTH_SHORT).show();
-            NotificationManager mNotificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+            Toast.makeText(this, "Enable Do Not Disturb access.", Toast.LENGTH_SHORT).show();
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (!mNotificationManager.isNotificationPolicyAccessGranted()) {
                     Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
@@ -176,6 +172,7 @@ public class RideModeOn extends AppCompatActivity implements LocationListener {
             }
         }
     }
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -184,36 +181,38 @@ public class RideModeOn extends AppCompatActivity implements LocationListener {
         audioManager.setRingerMode(3);
         storeAvg();
     }
-    void storeAvg(){
+
+    void storeAvg() {
         ContactDatabase contactDatabase = new ContactDatabase(this);
         SQLiteDatabase objSqLiteDatabase = contactDatabase.getWritableDatabase();
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("yyyy / MM / dd ");
-        String strDate =  mdformat.format(calendar.getTime());
+        String strDate = mdformat.format(calendar.getTime());
         float average = 0;
         Cursor objCursor = objSqLiteDatabase.rawQuery("select avg(ridespeed) from  speed", null);
-        if (objCursor.moveToFirst()){
-            do{
+        if (objCursor.moveToFirst()) {
+            do {
                 average = objCursor.getFloat(0);
                 // do what ever you want here
-            }while(objCursor.moveToNext());
+            } while (objCursor.moveToNext());
         }
         objCursor.close();
 
-        if(objSqLiteDatabase != null){
+        if (objSqLiteDatabase != null) {
             ContentValues contentValues = new ContentValues();
-            contentValues.put("avgspeed",average);
-            contentValues.put("dateofride",strDate);
-            if(average != 0){
-                long check = objSqLiteDatabase.insert("avgspeed",null,contentValues);
+            contentValues.put("avgspeed", average);
+            contentValues.put("dateofride", strDate);
+            if (average != 0) {
+                long check = objSqLiteDatabase.insert("avgspeed", null, contentValues);
             }
         }
-        Cursor cursor2 = objSqLiteDatabase.rawQuery("delete from speed",null);
+        Cursor cursor2 = objSqLiteDatabase.rawQuery("delete from speed", null);
         cursor2.moveToFirst();
         objSqLiteDatabase.close();
 
 
     }
+
     void doStuff() {
         LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
         if (locationManager != null) {

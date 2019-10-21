@@ -5,20 +5,20 @@ import android.location.Location;
 public class CLocation extends Location {
     private boolean bUseMetricUnits = false;
 
-    public CLocation(Location location){
+    public CLocation(Location location) {
         this(location, true);
     }
 
-    public CLocation(Location location,boolean b){
+    public CLocation(Location location, boolean b) {
         super(location);
         this.bUseMetricUnits = bUseMetricUnits;
     }
 
-    public boolean getUseMetricUnits(){
+    public boolean getUseMetricUnits() {
         return this.bUseMetricUnits;
     }
 
-    public void setbUseMetricUnits(boolean bUseMetricUnits){
+    public void setbUseMetricUnits(boolean bUseMetricUnits) {
         this.bUseMetricUnits = bUseMetricUnits;
     }
 
@@ -26,7 +26,7 @@ public class CLocation extends Location {
     public float distanceTo(Location dest) {
         float nDistance = super.distanceTo(dest);
 
-        if(!this.bUseMetricUnits){
+        if (!this.bUseMetricUnits) {
             //Convert meter to feet
             nDistance = (float) (nDistance * 3.28083989501312f);
         }
@@ -37,9 +37,9 @@ public class CLocation extends Location {
     public double getAltitude() {
         double nAltitude = super.getAltitude();
 
-        if(!this.getUseMetricUnits()){
+        if (!this.getUseMetricUnits()) {
             //Convert meter to feet
-            nAltitude =  nAltitude * 3.28083989501312d;
+            nAltitude = nAltitude * 3.28083989501312d;
         }
         return nAltitude;
     }
@@ -48,17 +48,18 @@ public class CLocation extends Location {
     public float getSpeed() {
         float nSpeed = super.getSpeed() * 3.2f;
 
-        if(!this.bUseMetricUnits){
+        if (!this.bUseMetricUnits) {
             //Convert meter/sec to miles per hr
             nSpeed = getSpeed() * 2.23693629f;
         }
         return nSpeed;
     }
+
     @Override
-    public float getAccuracy(){
+    public float getAccuracy() {
         float nAccuracy = (float) super.getAltitude();
 
-        if(!this.getUseMetricUnits()){
+        if (!this.getUseMetricUnits()) {
             //Convert meter to feet
             nAccuracy = (float) (nAccuracy * 3.28083989501312f);
         }

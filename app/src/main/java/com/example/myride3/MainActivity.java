@@ -2,7 +2,6 @@ package com.example.myride3;
 
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -14,32 +13,20 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import android.provider.Settings;
-import android.view.MenuInflater;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
-
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.Menu;
-import android.widget.Toast;
-
-import java.sql.SQLInput;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.ACCESS_NOTIFICATION_POLICY;
@@ -48,13 +35,14 @@ import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.SEND_SMS;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
-    private AppBarConfiguration mAppBarConfiguration;
     static int counter = 0;
+    private AppBarConfiguration mAppBarConfiguration;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        NotificationManager mNotificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!mNotificationManager.isNotificationPolicyAccessGranted()) {
                 Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
@@ -79,12 +67,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(READ_PHONE_STATE) == PackageManager.PERMISSION_DENIED || checkSelfPermission(Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_DENIED) {
-                String[] permissions = {READ_PHONE_STATE,READ_CALL_LOG,SEND_SMS,ACCESS_NOTIFICATION_POLICY,ACCESS_FINE_LOCATION};
-                requestPermissions(permissions,0);
-                requestPermissions(permissions,1);
-                requestPermissions(permissions,2);
-                requestPermissions(permissions,3);
-                requestPermissions(permissions,4);
+                String[] permissions = {READ_PHONE_STATE, READ_CALL_LOG, SEND_SMS, ACCESS_NOTIFICATION_POLICY, ACCESS_FINE_LOCATION};
+                requestPermissions(permissions, 0);
+                requestPermissions(permissions, 1);
+                requestPermissions(permissions, 2);
+                requestPermissions(permissions, 3);
+                requestPermissions(permissions, 4);
             }
         }
 
@@ -112,9 +100,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     protected void onPause() {
         super.onPause();
     }
+
     protected void onDestroy() {
         super.onDestroy();
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -128,31 +118,33 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
     @Override
     public void onLocationChanged(Location location) {
-        CLocation mylocation = new CLocation(location,true);
-        if(counter % 2 == 0 || counter == 1){
+        CLocation mylocation = new CLocation(location, true);
+        if (counter % 2 == 0 || counter == 1) {
             autoStart(mylocation);
         }
     }
-    void autoStart(CLocation location){
+
+    void autoStart(CLocation location) {
         SharedPreferences preferences = this.getSharedPreferences("MyPref", 0);
-        Intent intent = new Intent(this,RideModeOn.class);
+        Intent intent = new Intent(this, RideModeOn.class);
         float nCurrentSpeed = 0;
-        if(location!=null){
+        if (location != null) {
             location.setbUseMetricUnits(true);
             nCurrentSpeed = location.getSpeed();
-            if(preferences.getBoolean("Auto_Start",true)){
-                if(nCurrentSpeed > 20){
+            if (preferences.getBoolean("Auto_Start", true)) {
+                if (nCurrentSpeed > 20) {
                     startActivity(intent);
                     counter++;
-                }
-                else{
+                } else {
                     return;
                 }
             }
         }
     }
+
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
 

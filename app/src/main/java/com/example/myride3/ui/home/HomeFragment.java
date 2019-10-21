@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -23,7 +23,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myride3.AddContact;
 import com.example.myride3.AutoReply;
-import com.example.myride3.MainActivity;
 import com.example.myride3.R;
 import com.example.myride3.RideModeOn;
 
@@ -62,7 +61,7 @@ public class HomeFragment extends Fragment {
                     e.printStackTrace();
                 }*/
                 startActivity(intent);
-                Toast.makeText(getContext(),"Call Blocking Active",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Call Blocking Active", Toast.LENGTH_SHORT).show();
 
             }
         });

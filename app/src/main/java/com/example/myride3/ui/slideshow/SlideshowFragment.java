@@ -10,10 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myride3.ContactDatabase;
@@ -21,9 +19,9 @@ import com.example.myride3.R;
 
 public class SlideshowFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
     ContactDatabase contactDatabase;
-    TextView putYest,putAvg;
+    TextView putYest, putAvg;
+    private SlideshowViewModel slideshowViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,8 +34,8 @@ public class SlideshowFragment extends Fragment {
         //showYesterday(root);
         //showPrevious();
         final SQLiteDatabase objSqLiteDatabase = contactDatabase.getWritableDatabase();
-        final Cursor cursor1 = objSqLiteDatabase.rawQuery("delete from avgspeed",null);
-        Button button = (Button)root.findViewById(R.id.button3);
+        final Cursor cursor1 = objSqLiteDatabase.rawQuery("delete from avgspeed", null);
+        Button button = (Button) root.findViewById(R.id.button3);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,11 +46,10 @@ public class SlideshowFragment extends Fragment {
         });
 
 
-
         return root;
     }
-    public void setAverage(View view)
-    {
+
+    public void setAverage(View view) {
         try {
             SQLiteDatabase objSqLiteDatabase = contactDatabase.getReadableDatabase();
             Cursor objCursor = objSqLiteDatabase.rawQuery("select * from  avgspeed", null);
@@ -61,7 +58,7 @@ public class SlideshowFragment extends Fragment {
                 Toast.makeText(getActivity(), "No Data is returned", Toast.LENGTH_SHORT).show();
             } else {
                 while (objCursor.moveToNext()) {
-                    objStringBuffer.append("| Date: " + objCursor.getString(2)+" | ");
+                    objStringBuffer.append("| Date: " + objCursor.getString(2) + " | ");
                     objStringBuffer.append(" Speed: " + objCursor.getString(1));
                     objStringBuffer.append("\n");
                 }
@@ -72,8 +69,8 @@ public class SlideshowFragment extends Fragment {
         }
 
     }
-    public void showYesterday(View view)
-    {
+
+    public void showYesterday(View view) {
         try {
             SQLiteDatabase objSqLiteDatabase = contactDatabase.getReadableDatabase();
             Cursor objCursor = objSqLiteDatabase.rawQuery("select * from  speed ", null);
@@ -82,7 +79,7 @@ public class SlideshowFragment extends Fragment {
                 Toast.makeText(getActivity(), "No Data is returned", Toast.LENGTH_SHORT).show();
             } else {
                 while (objCursor.moveToNext()) {
-                    objStringBuffer.append("| Date: " + objCursor.getString(0)+" | ");
+                    objStringBuffer.append("| Date: " + objCursor.getString(0) + " | ");
                     objStringBuffer.append(" Speed: " + objCursor.getString(1));
                     objStringBuffer.append("\n");
                 }

@@ -10,8 +10,7 @@
         android:pivotX="50%"
         android:pivotY="50%"
         android:toXScale="1.5"
-        android:toYScale="1.5">
-    </scale>
+        android:toYScale="1.5"></scale>
 
     <rotate
         android:duration="2500"
@@ -39,7 +38,6 @@
     <!--android:toXScale="0.125"-->
 
     <!--android:toYScale="0.125">-->
-
 
 
     <!--</scale>-->

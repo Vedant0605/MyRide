@@ -1,9 +1,6 @@
 package com.example.myride3;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -13,9 +10,8 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
-import com.example.myride3.ui.home.HomeFragment;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AutoReply extends AppCompatActivity {
 
@@ -33,26 +29,26 @@ public class AutoReply extends AppCompatActivity {
         final EditText e = (EditText) findViewById(R.id.textInputEditText);
         final String[] msg = new String[1];
         final Context context = getApplicationContext();
-        final Switch sw1 = (Switch)findViewById(R.id.switch3);
-        final Switch sw2 = (Switch)findViewById(R.id.switch4);
-        e.setText(pref.getString("Auto_Reply",""));
+        final Switch sw1 = (Switch) findViewById(R.id.switch3);
+        final Switch sw2 = (Switch) findViewById(R.id.switch4);
+        e.setText(pref.getString("Auto_Reply", ""));
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                sw1.setChecked(pref.getBoolean("MyPref",true));
-                sw2.setChecked(pref.getBoolean("MyPref",true));
-                s.setChecked(pref.getBoolean("MyPref",true));
+                sw1.setChecked(pref.getBoolean("MyPref", true));
+                sw2.setChecked(pref.getBoolean("MyPref", true));
+                s.setChecked(pref.getBoolean("MyPref", true));
             }
         });
 
         sw1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked){
-                    editor.putBoolean("Auto_Speed",true);
+                if (isChecked) {
+                    editor.putBoolean("Auto_Speed", true);
                     editor.commit();
-                }else {
-                    editor.putBoolean("Auto_Speed",false);
+                } else {
+                    editor.putBoolean("Auto_Speed", false);
                     editor.commit();
                 }
             }
@@ -60,11 +56,11 @@ public class AutoReply extends AppCompatActivity {
         sw2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked){
-                    editor.putBoolean("Auto_Start",true);
+                if (isChecked) {
+                    editor.putBoolean("Auto_Start", true);
                     editor.commit();
-                }else {
-                    editor.putBoolean("Auto_Start",false);
+                } else {
+                    editor.putBoolean("Auto_Start", false);
                     editor.commit();
                 }
             }
@@ -73,11 +69,11 @@ public class AutoReply extends AppCompatActivity {
         s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked){
-                    editor.putBoolean("Auto_reply",true);
+                if (isChecked) {
+                    editor.putBoolean("Auto_reply", true);
                     editor.commit();
-                }else {
-                    editor.putBoolean("Auto_reply",false);
+                } else {
+                    editor.putBoolean("Auto_reply", false);
                     editor.commit();
                 }
             }
@@ -88,8 +84,8 @@ public class AutoReply extends AppCompatActivity {
             public void onClick(View v) {
                 msg[0] = e.getText().toString();
                 String message = msg[0];
-                Toast.makeText(context,"Message set to "+message,Toast.LENGTH_SHORT).show();
-                editor.putString("Message",message);
+                Toast.makeText(context, "Message set to " + message, Toast.LENGTH_SHORT).show();
+                editor.putString("Message", message);
                 editor.commit();
             }
         });

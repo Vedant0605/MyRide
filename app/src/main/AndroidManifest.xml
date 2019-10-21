@@ -21,12 +21,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".AddContact" />
         <activity android:name=".CarMode" />
-        <activity android:name=".AutoReply"
-            android:label="Settings"/>
+        <activity
+            android:name=".AutoReply"
+            android:label="Settings" />
         <activity android:name=".RideModeOn" />
         <activity
             android:name=".SplashScreen"
